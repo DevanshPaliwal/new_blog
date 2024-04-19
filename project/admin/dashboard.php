@@ -40,9 +40,8 @@ if(!isset($admin_id)){
    <div class="box-container">
 
    <div class="box">
-      <h3>welcome!</h3>
+      <h3>Welcome!</h3>
       <p><?= $fetch_profile['name']; ?></p>
-      <a href="update_profile.php" class="btn">update profile</a>
    </div>
 
    <div class="box">
@@ -52,7 +51,7 @@ if(!isset($admin_id)){
          $numbers_of_posts = $select_posts->rowCount();
       ?>
       <h3><?= $numbers_of_posts; ?></h3>
-      <p>posts added</p>
+      <p>Posts added</p>
       <a href="add_posts.php" class="btn">add new post</a>
    </div>
 
@@ -63,20 +62,11 @@ if(!isset($admin_id)){
          $numbers_of_active_posts = $select_active_posts->rowCount();
       ?>
       <h3><?= $numbers_of_active_posts; ?></h3>
-      <p>active posts</p>
+      <p>Active posts</p>
       <a href="view_posts.php" class="btn">see posts</a>
    </div>
 
-   <div class="box">
-      <?php
-         $select_deactive_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ? AND status = ?");
-         $select_deactive_posts->execute([$admin_id, 'deactive']);
-         $numbers_of_deactive_posts = $select_deactive_posts->rowCount();
-      ?>
-      <h3><?= $numbers_of_deactive_posts; ?></h3>
-      <p>deactive posts</p>
-      <a href="view_posts.php" class="btn">see posts</a>
-   </div>
+   
 
    <div class="box">
       <?php
@@ -85,7 +75,7 @@ if(!isset($admin_id)){
          $numbers_of_users = $select_users->rowCount();
       ?>
       <h3><?= $numbers_of_users; ?></h3>
-      <p>users account</p>
+      <p>User accounts</p>
       <a href="users_accounts.php" class="btn">see users</a>
    </div>
 
@@ -96,33 +86,10 @@ if(!isset($admin_id)){
          $numbers_of_admins = $select_admins->rowCount();
       ?>
       <h3><?= $numbers_of_admins; ?></h3>
-      <p>admins account</p>
+      <p>Admin accounts</p>
       <a href="admin_accounts.php" class="btn">see admins</a>
    </div>
    
-   <div class="box">
-      <?php
-         $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE admin_id = ?");
-         $select_comments->execute([$admin_id]);
-         $select_comments->execute();
-         $numbers_of_comments = $select_comments->rowCount();
-      ?>
-      <h3><?= $numbers_of_comments; ?></h3>
-      <p>comments added</p>
-      <a href="comments.php" class="btn">see comments</a>
-   </div>
-
-   <div class="box">
-      <?php
-         $select_likes = $conn->prepare("SELECT * FROM `likes` WHERE admin_id = ?");
-         $select_likes->execute([$admin_id]);
-         $select_likes->execute();
-         $numbers_of_likes = $select_likes->rowCount();
-      ?>
-      <h3><?= $numbers_of_likes; ?></h3>
-      <p>total likes</p>
-      <a href="view_posts.php" class="btn">see posts</a>
-   </div>
 
    </div>
 

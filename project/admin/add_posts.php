@@ -18,8 +18,6 @@ if(isset($_POST['publish'])){
    $title = filter_var($title, FILTER_SANITIZE_STRING);
    $content = $_POST['content'];
    $content = filter_var($content, FILTER_SANITIZE_STRING);
-   $category = $_POST['category'];
-   $category = filter_var($category, FILTER_SANITIZE_STRING);
    $status = 'active';
    
    $image = $_FILES['image']['name'];
@@ -46,9 +44,9 @@ if(isset($_POST['publish'])){
    if($select_image->rowCount() > 0 AND $image != ''){
       $message[] = 'please rename your image!';
    }else{
-      $insert_post = $conn->prepare("INSERT INTO `posts`(admin_id, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
-      $insert_post->execute([$admin_id, $name, $title, $content, $category, $image, $status]);
-      $message[] = 'post published!';
+      $insert_post = $conn->prepare("INSERT INTO `posts`(admin_id, name, title, content, image, status) VALUES(?,?,?,?,?,?)");
+      $insert_post->execute([$admin_id, $name, $title, $content, $image, $status]);
+      $message[] = 'Post Published!';
    }
    
 }
@@ -61,8 +59,6 @@ if(isset($_POST['draft'])){
    $title = filter_var($title, FILTER_SANITIZE_STRING);
    $content = $_POST['content'];
    $content = filter_var($content, FILTER_SANITIZE_STRING);
-   $category = $_POST['category'];
-   $category = filter_var($category, FILTER_SANITIZE_STRING);
    $status = 'deactive';
    
    $image = $_FILES['image']['name'];
@@ -89,8 +85,8 @@ if(isset($_POST['draft'])){
    if($select_image->rowCount() > 0 AND $image != ''){
       $message[] = 'please rename your image!';
    }else{
-      $insert_post = $conn->prepare("INSERT INTO `posts`(admin_id, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
-      $insert_post->execute([$admin_id, $name, $title, $content, $category, $image, $status]);
+      $insert_post = $conn->prepare("INSERT INTO `posts`(admin_id, name, title, content, image, status) VALUES(?,?,?,?,?,?,?)");
+      $insert_post->execute([$admin_id, $name, $title, $content , $image, $status]);
       $message[] = 'draft saved!';
    }
 
@@ -124,40 +120,15 @@ if(isset($_POST['draft'])){
 
    <form action="" method="post" enctype="multipart/form-data">
       <input type="hidden" name="name" value="<?= $fetch_profile['name']; ?>">
-      <p>post title <span>*</span></p>
-      <input type="text" name="title" maxlength="100" required placeholder="add post title" class="box">
-      <p>post content <span>*</span></p>
-      <textarea name="content" class="box" required maxlength="10000" placeholder="write your content..." cols="30" rows="10"></textarea>
-      <p>post category <span>*</span></p>
-      <select name="category" class="box" required>
-         <option value="" selected disabled>-- select category* </option>
-         <option value="nature">nature</option>
-         <option value="education">education</option>
-         <option value="pets and animals">pets and animals</option>
-         <option value="technology">technology</option>
-         <option value="fashion">fashion</option>
-         <option value="entertainment">entertainment</option>
-         <option value="movies and animations">movies</option>
-         <option value="gaming">gaming</option>
-         <option value="music">music</option>
-         <option value="sports">sports</option>
-         <option value="news">news</option>
-         <option value="travel">travel</option>
-         <option value="comedy">comedy</option>
-         <option value="design and development">design and development</option>
-         <option value="food and drinks">food and drinks</option>
-         <option value="lifestyle">lifestyle</option>
-         <option value="personal">personal</option>
-         <option value="health and fitness">health and fitness</option>
-         <option value="business">business</option>
-         <option value="shopping">shopping</option>
-         <option value="animations">animations</option>
-      </select>
-      <p>post image</p>
+      <p>Post Title <span>*</span></p>
+      <input type="text" name="title" maxlength="100" required placeholder="Add post title" class="box">
+      <p>Post Content <span>*</span></p>
+      <textarea name="content" class="box" required maxlength="10000" placeholder="Write your content..." cols="30" rows="10"></textarea>
+      
+      <p>Post Image</p>
       <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
       <div class="flex-btn">
          <input type="submit" value="publish post" name="publish" class="btn">
-         <input type="submit" value="save draft" name="draft" class="option-btn">
       </div>
    </form>
 
